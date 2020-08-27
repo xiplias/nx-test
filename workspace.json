@@ -84,6 +84,62 @@
           }
         }
       }
+    },
+    "platform-server": {
+      "root": "apps/platform-server",
+      "sourceRoot": "apps/platform-server/src",
+      "projectType": "application",
+      "prefix": "platform-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/platform-server",
+            "main": "apps/platform-server/src/main.ts",
+            "tsConfig": "apps/platform-server/tsconfig.app.json",
+            "assets": ["apps/platform-server/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/platform-server/src/environments/environment.ts",
+                  "with": "apps/platform-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "platform-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/platform-server/tsconfig.app.json",
+              "apps/platform-server/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/platform-server/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/platform-server/jest.config.js",
+            "tsConfig": "apps/platform-server/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

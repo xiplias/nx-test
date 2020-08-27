@@ -28,6 +28,9 @@
     "platform-e2e": {
       "tags": [],
       "implicitDependencies": ["platform"]
+    },
+    "platform-server": {
+      "tags": []
     }
   }
 }
